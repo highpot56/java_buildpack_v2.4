@@ -27,6 +27,17 @@
             <Valve className="org.apache.catalina.valves.RemoteIpValve" protocolHeader="x-forwarded-proto"/>
             <Valve className="com.gopivotal.cloudfoundry.tomcat.logging.access.CloudFoundryAccessLoggingValve"
                    pattern='[ACCESS] %h %l %u %t "%r" %s %b %{X-Vcap-Request-Id}i' enabled="${access.logging.enabled}"/>
+                   
+            <!-- GEA10V01 -->
+			<Realm className="org.apache.catalina.realm.JDBCRealm"
+				driverName="${connectionDriver}"
+				connectionURL="${connectionUrl}"
+				connectionName="${connectionName}"
+				connectionPassword="${connectionPassword}"
+				userTable="gea10v01" userNameCol="userid" userCredCol="passwd"
+				userRoleTable="gea10v01" roleNameCol="system_id"
+			/>
+			
             <Host name='localhost'>
                 <Listener className="com.gopivotal.cloudfoundry.tomcat.lifecycle.ApplicationStartupFailureDetectingLifecycleListener"/>
             </Host>
